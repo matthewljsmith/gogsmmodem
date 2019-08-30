@@ -131,9 +131,9 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	self.tx <- line
 	time.Sleep(1 * time.Second)
 	response = <-self.rx
-	fmt.Println("res1: %v", response)
+	log.Printf("res1: %v\n", response)
 	self.tx <- body + "\x1a"
-	fmt.Println("res2: %v", response)
+	log.Printf("res2: %v\n", response)
 	response = <-self.rx
 	if _, e := response.(ERROR); e {
 		return errors.New("Unable to send text")
