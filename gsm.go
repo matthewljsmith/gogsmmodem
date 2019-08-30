@@ -116,7 +116,7 @@ func (self *Modem) DeleteMessage(n int) error {
 }
 
 func (self *Modem) SendMessage(telephone, body string) error {
-	enc := gsmEncode(body)
+	// enc := gsmEncode(body)
 	line := "AT" + "+CMGS"
 	line += "=" + quotes([]interface{}{telephone})
 	line += "\r"
