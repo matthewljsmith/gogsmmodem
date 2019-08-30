@@ -118,8 +118,8 @@ func (self *Modem) DeleteMessage(n int) error {
 func (self *Modem) SendMessage(telephone, body string) error {
 	enc := gsmEncode(body)
 	line := "AT" + "+CMGS"
-	line += "=" + quotes(enc)
-	line += "=" + quotes(telephone)
+	line += "=" + quotes([]string{enc})
+	line += "=" + quotes([]string{telephone})
 	line += "\r"
 
 	self.tx <- line
