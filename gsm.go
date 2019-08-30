@@ -279,7 +279,7 @@ func (self *Modem) listen() {
 				}
 			}
 		case line := <-self.txx:
-			m := reQreQuestion.FindStringSubmatch(line)
+			m := reQuestion.FindStringSubmatch(line)
 			if len(m) > 0 {
 				last = m[1]
 			}
