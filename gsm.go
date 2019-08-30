@@ -128,7 +128,6 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	// send the initiating message
 	line := fmt.Sprintf("AT+CMGS=\"%s\"\r", telephone)
 	self.tx <- line
-	<-self.rx
 	self.tx <- body + "\x1a"
 	response = <-self.rx
 	if _, e := response.(ERROR); e {
@@ -279,8 +278,8 @@ func (self *Modem) listen() {
 					self.OOB <- p
 				}
 			}
-		case line := <-self.tx:
-			m := reQuestion.FindStringSubmatch(line)
+		case line := <-self.txx:
+			m := reQreQuestion.FindStringSubmatch(line)
 			if len(m) > 0 {
 				last = m[1]
 			}
