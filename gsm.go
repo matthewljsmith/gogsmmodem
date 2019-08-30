@@ -8,6 +8,7 @@ import (
 	"log"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/tarm/serial"
 )
@@ -128,7 +129,11 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	// send the initiating message
 	line := fmt.Sprintf("AT+CMGS=\"%s\"\r", telephone)
 	self.tx <- line
+	time.Sleep(1 * time.Second)
+	response = <-self.rx
+	fmt.Println("res1: %v", response)
 	self.tx <- body + "\x1a"
+	fmt.Println("res2: %v", response)
 	response = <-self.rx
 	if _, e := response.(ERROR); e {
 		return errors.New("Unable to send text")
