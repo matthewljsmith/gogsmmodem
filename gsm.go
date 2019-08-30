@@ -130,8 +130,6 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	line := fmt.Sprintf("AT+CMGS=\"%s\"\r", telephone)
 	self.tx <- line
 	time.Sleep(1 * time.Second)
-	response = <-self.rx
-	log.Printf("res1: %v\n", response)
 	self.tx <- body + "\x1a"
 	log.Printf("res2: %v\n", response)
 	response = <-self.rx
