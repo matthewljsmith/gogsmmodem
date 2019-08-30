@@ -117,8 +117,19 @@ func (self *Modem) DeleteMessage(n int) error {
 
 func (self *Modem) SendMessage(telephone, body string) error {
 	enc := gsmEncode(body)
-	_, err := self.sendBody("+CMGS", enc, telephone)
-	return err
+	line := "AT" + "+CMGS"
+	line += "=" + quotes(enc)
+	line += "=" + quotes(telephone)
+	line += "\r"
+
+	self.tx <- line
+	response := <-self.rx
+	self.tx <- body + "\x1a"
+	response = <-self.rx
+	if _, e := response.(ERROR); e {
+		return response, errors.New("Response was ERROR")
+	}
+	return response, nil
 }
 
 func lineChannel(r io.Reader) chan string {
