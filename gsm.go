@@ -278,7 +278,7 @@ func (self *Modem) listen() {
 					self.OOB <- p
 				}
 			}
-		case line := <-self.txx:
+		case line := <-self.tx:
 			m := reQuestion.FindStringSubmatch(line)
 			if len(m) > 0 {
 				last = m[1]
