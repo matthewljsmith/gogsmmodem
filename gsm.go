@@ -129,7 +129,7 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	line := fmt.Sprintf("AT+CMGS=%s\r", quotes([]interface{}{telephone}))
 	self.tx <- line
 	self.tx <- body + "\x1a"
-	response := <-self.rx
+	response = <-self.rx
 	if _, e := response.(ERROR); e {
 		return errors.New("Unable to send text")
 	}
