@@ -123,7 +123,6 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	line += "\r"
 
 	self.tx <- line
-	response := <-self.rx
 	self.tx <- body + "\x1a"
 	response = <-self.rx
 	if _, e := response.(ERROR); e {
