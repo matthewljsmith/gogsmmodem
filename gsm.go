@@ -3,6 +3,7 @@ package gogsmmodem
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"regexp"
@@ -125,7 +126,7 @@ func (self *Modem) SendMessage(telephone, body string) error {
 	}
 
 	// send the initiating message
-	line := fmt.Sprintf("AT+CMGS=%s\r", quotes([]interface{}{telephone})
+	line := fmt.Sprintf("AT+CMGS=%s\r", quotes([]interface{}{telephone}))
 	self.tx <- line
 	self.tx <- body + "\x1a"
 	response := <-self.rx
