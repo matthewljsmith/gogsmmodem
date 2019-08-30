@@ -124,7 +124,7 @@ func (self *Modem) SendMessage(telephone, body string) error {
 
 	self.tx <- line
 	self.tx <- body + "\x1a"
-	response = <-self.rx
+	response := <-self.rx
 	if _, e := response.(ERROR); e {
 		return errors.New("Response was ERROR")
 	}
